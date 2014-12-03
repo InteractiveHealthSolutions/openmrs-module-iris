@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="org.openmrs.module.iris">
+    <class name="IrisOutputMapping" table="${project.parent.artifactId}_output_mapping">
+        <id column="iris_output_mapping_id" name="irisOutputMappingId" type="int" unsaved-value="0">
+            <generator class="native"/>
+        </id>
+	<property column="iris_output_variable" name="irisOutputVariable" type="java.lang.String"/>
+	<property column="iris_output_index" name="irisOutputIndex" type="int"/>
+	<many-to-one name="concept" column="concept_id" class="org.openmrs.Concept" />
+	<property column="description" name="description" type="java.lang.String"/>
+	<property column="is_observation" name="observation" type="java.lang.Boolean"/>
+	<property column="required" name="required" type="java.lang.Boolean"/>
+	
+	<many-to-one name="creator" class="org.openmrs.User" not-null="true" />
+	<property name="dateCreated" column="date_created" type="java.util.Date" not-null="true" />
+	<many-to-one name="changedBy" column="changed_by" class="org.openmrs.User" />
+	<property name="dateChanged" column="date_changed" type="java.util.Date" />
+	<property name="voided" column="voided" type="boolean" not-null="true" />
+	<many-to-one name="voidedBy" column="voided_by" class="org.openmrs.User" />
+	<property name="dateVoided" column="date_voided" type="java.util.Date" />
+	<property name="voidReason" column="void_reason" type="java.lang.String" />
+
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+    <changeSet id="iris-20140830-1628" author="maimoonak" dbms="mysql">
+        <preConditions onFail="MARK_RAN">
+			<not><tableExists tableName="iris_output_mapping"/></not>
+		</preConditions>
+        <comment>Adding IRIS output mapping table</comment>
+        <createTable tableName="iris_output_mapping">
+            <column name="iris_output_mapping_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="iris_output_variable" type="varchar(100)"/>
+            <column name="iris_output_index" type="int">
+            	<constraints nullable="false"/>
+            </column>
+            <column name="concept_id" type="int" />
+            <column name="description" type="varchar(255)"/>
+            <column name="observation" type="boolean"/>
+            <column name="required" type="boolean" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+		    </column>
+			<column name="date_created" type="DATETIME">
+				<constraints nullable="false" />
+			</column>
+			<column name="creator" type="int">
+				<constraints nullable="false" />
+			</column>
+			<column name="date_changed" type="DATETIME" />
+			<column name="changed_by" type="int" />
+			<column name="voided" type="boolean" defaultValueNumeric="0">
+				<constraints nullable="false" />
+			</column>
+			<column name="date_voided" type="DATETIME" />
+			<column name="voided_by" type="int" />
+			<column name="void_reason" type="varchar(1000)" />
+        </createTable>
+        <addForeignKeyConstraint constraintName="iris_output_mapping_concept_id" 
+            baseTableName="iris_output_mapping" baseColumnNames="concept_id" 
+            referencedTableName="concept" referencedColumnNames="concept_id"/>
+        <addForeignKeyConstraint constraintName="iris_output_mapping_creator"
+			baseTableName="iris_output_mapping" baseColumnNames="creator"
+			referencedTableName="users" referencedColumnNames="user_id" />
+		<addForeignKeyConstraint constraintName="iris_output_mapping_changed_by"
+			baseTableName="iris_output_mapping" baseColumnNames="changed_by"
+			referencedTableName="users" referencedColumnNames="user_id" />
+		<addForeignKeyConstraint constraintName="iris_output_mapping_voided_by"
+			baseTableName="iris_output_mapping" baseColumnNames="voided_by"
+			referencedTableName="users" referencedColumnNames="user_id" />
+		
+		<sql>
+		INSERT INTO iris_output_mapping (iris_output_mapping_id,iris_output_variable,iris_output_index,concept_id,description,observation,required,creator,date_created)
+		VALUES 
+		(1,'CertificateKey',0,NULL,NULL,NULL,1,1,'2014-08-29 00:00:00'),
+		(2,'UCCode',1,NULL,NULL,1,1,1,'2014-08-29 00:00:00'),
+		(3,'MainInjury',2,NULL,NULL,1,0,1,'2014-08-29 00:00:00'),
+		(4,'Status',3,NULL,NULL,1,0,1,'2014-08-29 00:00:00'),
+		(5,'Reject',4,NULL,NULL,1,0,1,'2014-08-29 00:00:00'),
+		(6,'Coding',5,NULL,NULL,1,0,1,'2014-08-29 00:00:00'),
+		(7,'CodingVersion',6,NULL,NULL,1,0,1,'2014-08-29 00:00:00'),
+		(8,'CodingFlags',7,NULL,NULL,1,0,1,'2014-08-29 00:00:00'),
+		(9,'SelectedCodes',8,NULL,NULL,1,0,1,'2014-08-29 00:00:00'),
+		(10,'SubstitutedCodes',9,NULL,NULL,1,0,1,'2014-08-29 00:00:00'),
+		(11,'ErnCodes',10,NULL,NULL,1,0,1,'2014-08-29 00:00:00'),
+		(12,'AcmeCodes',11,NULL,NULL,1,0,1,'2014-08-29 00:00:00'),
+		(13,'MultipleCodes',12,NULL,NULL,1,0,1,'2014-08-29 00:00:00'),
+		(14,'Comments',13,NULL,NULL,1,0,1,'2014-08-29 00:00:00'),
+		(15,'FreeText',14,NULL,NULL,1,0,1,'2014-08-29 00:00:00'),
+		(16,'ToDoList',15,NULL,NULL,1,0,1,'2014-08-29 00:00:00'),
+		(17,'CoderReject',16,NULL,NULL,1,0,1,'2014-08-29 00:00:00'),
+		(18,'DiagnosisModified',17,NULL,NULL,1,0,1,'2014-08-29 00:00:00')
+		</sql>
+
+		
+		<comment>Adding global properties data</comment>
+		<sql>
+		INSERT INTO global_property
+		(property, property_value, description)
+		VALUES
+		('iris.server_url','',null),
+		('iris.db_username','',null),
+		('iris.db_password','',null),
+		('iris.db_driver_class','com.mysql.jdbc.Driver',null),
+		
+		('iris.output.encounterCreatorUsername','daemon',null),
+		('iris.output.encounterType','IRIS COD','Encounter type for Cause of Death calculated by IRIS software. Changing it may result in IRIS COD under different Encounter types'),
+		('iris.output.causeOfDeathGroupConceptIdName','CAUSE OF DEATH FROM IRIS ALGORITHM',null),
+		('iris.certificateTable.primaryKeyColumn','CertificateKey',null),
+		('iris.input.medcodConceptIdName','','Comma separated Concept names for inserting in medcod tables. Concept Names should be ordered by sequence of CODs in Form')
+		
+		</sql>
+		
+		<!-- <sql>
+			insert into DATABASECHANGELOG values('20090907-3', 'Knoll_Frank',
+			'liquibase-update-to-latest.xml', '2012-03-15 11:00:00',
+			'627e3e7cc7d9a2aece268fa93bf88', 'Custom SQL',
+			'Deleting duplicate concept word keys', NULL, '1.9.4')
+		</sql> -->
+	</changeSet>
+
+
+
+
+</databaseChangeLog>
