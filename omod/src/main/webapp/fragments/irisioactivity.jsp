@@ -54,9 +54,9 @@ function loadJsonWOJQuery(path, success, error)
 		<td>
 			<h1>IRIS</h1>
 			<br>
-			IRIS is an external tool that finds out Cause of Death (COD) for death certificates filled according to International Medical Death Certificates pattern.
+			IRIS is an external tool that finds out Cause of Death (COD) for death certificates filled according to International Medical Death Certificate (IMDC) format.
             <br>
-            eCODIRS is using IRIS to calculate COD from the information filled into Medical Death Record forms. 
+            CRVS applications use IRIS to calculate COD from the information filled into Medical Death Record forms. 
 			<br>
             It is a two step process and is explained below. 
             To download IRIS and read further details about the software, visit: <a href="http://www.dimdi.de/static/en/klassi/irisinstitute" >http://www.dimdi.de/static/en/klassi/irisinstitute</a></td>
@@ -64,9 +64,9 @@ function loadJsonWOJQuery(path, success, error)
 	<tr>
 		<td>
 			<div class="ivdiv">
-			<h2>Step 1: Pushing eCODIRS data to IRIS</h2>
+			<h2>Step 1: Pushing IMDC data to IRIS</h2>
 			<br>
-			eCODIRS needs to first push data to IRIS for COD calculations to be done. 
+			First push data to IRIS for COD calculations to be done from observations and findings specified on Medical Death Certificate. 
 			<br>
 			Click 'Push Data to IRIS' button below to do this. 
 			<br><br>
@@ -77,14 +77,14 @@ function loadJsonWOJQuery(path, success, error)
 	<tr>
 		<td>
 			<div class="ivdiv">
-			<h2>Step 2: Pulling Processed data Back to eCODIRS</h2>
+			<h2>Step 2: Pulling Processed data Back</h2>
 			<br>
-			When IRIS software has calculated COD, the result needs to be pulled back into eCODIRS. 
-			This COD will appear in reports and eCODIRS database.
+			Now run your IRIS instance connected to central database and batch process the pushed data. When IRIS software has calculated CODs, the result needs to be pulled back. 
+			This COD will appear in database and reports.
 			<br>
-			Click 'Pull COD to eCODIRS' button below to do this. 	
+			Click 'Pull calculated CODs back' button below to do this. 	
 			<br><br>
-			<input type="button" value="Pull COD to eCODIRS" onclick="pullData();"/>
+			<input type="button" value="Pull calculated CODs back" onclick="pullData();"/>
 			</div>
 		</td>
 	</tr>
